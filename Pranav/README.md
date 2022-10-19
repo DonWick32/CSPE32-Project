@@ -1,0 +1,1 @@
+Start coding on the algorithm using python for now.
