@@ -14,8 +14,7 @@ int main(){
     }
 
     for(int i = 1;i <= n;i++){
-        int random = (rand()%n)+1;
-        for(int j = 1;j <= random;j++){
+        for(int j = 1;j <= n;j++){
             if((j != i)&&(adj_mat[i][j] == -1)){
                 for(int k = 1;k <= n;k++){
                   if(adj_mat[i][k] != -1){
