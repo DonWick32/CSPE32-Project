@@ -1,6 +1,5 @@
 import random
 import math
-from re import M
 
 class Graph:
     def __init__(self, num_of_nodes, directed = False):
@@ -24,13 +23,17 @@ class Graph:
 n = int(input("Number of vertices: "))
 graph = Graph(n)
 
-offset = random.randint(1, n)
-
 for i in range(n):
     for j in range(n):
-        if (graph.m_adj_matrix[j][i] != 0):
-            graph.m_adj_matrix[i][j] = graph.m_adj_matrix[j][i]
-        elif (i != j):
-            graph.add_edge(i, j, abs(i-j) + offset)
-
+        if (j != i and graph.m_adj_matrix[i][j] == 0):
+            for k in range(n):
+                if (graph.m_adj_matrix[i][k] != 0):
+                    if (graph.m_adj_matrix[k][j] != 0):
+                        graph.m_adj_matrix[i][j] = max(int(math.ceil(math.sqrt(graph.m_adj_matrix[i][k]**2 + graph.m_adj_matrix[k][j]**2))), graph.m_adj_matrix[i][j])
+                    else:
+                        graph.m_adj_matrix[i][j] = max(random.randint(0, n), graph.m_adj_matrix[i][j])
+                else:
+                    graph.m_adj_matrix[i][j] = max(random.randint(0, n), graph.m_adj_matrix[i][j])
+        graph.m_adj_matrix[j][i] = graph.m_adj_matrix[i][j]
+        
 graph.print_adj_matrix()

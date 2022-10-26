@@ -1,5 +1,6 @@
 import random
 import sys
+import math
 
 class Graph:
     def __init__(self, num_of_nodes, directed = False):
@@ -81,14 +82,15 @@ class Graph:
 n = int(input("Number of vertices: "))
 graph = Graph(n)
 
-offset = random.randint(1, 100)
+offset = random.randint(1, n*n)
 
 for i in range(n):
     for j in range(n):
         if (graph.m_adj_matrix[j][i] != 0):
             graph.m_adj_matrix[i][j] = graph.m_adj_matrix[j][i]
         elif (i != j):
-            graph.add_edge(i, j, abs(i-j) + offset)
+            # graph.add_edge(i, j, abs(i-j) + offset)
+            graph.add_edge(i, j, random.randint(1,n))
 
 graph.print_adj_matrix()
 
