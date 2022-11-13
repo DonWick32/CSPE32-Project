@@ -1,36 +1,40 @@
 import random
-import sys
 import math
-from timeit import default_timer as timer
+import sys
 import matplotlib.pyplot as plt
+x1 = []
+y1 = []
+x2 = []
+y2 = []
+
 
 class Graph:
     def __init__(self, num_of_nodes):
-        self.m_num_of_nodes = num_of_nodes
         self.m_adj_matrix = [[0 for column in range(num_of_nodes)]
                              for row in range(num_of_nodes)]
+        self.m_num_of_nodes = num_of_nodes
+        self.visited = [0 for n in range(num_of_nodes)]
+        self.graph = []
+        self.dfs_sequence = []
         self.mst_adj = [[0 for column in range(num_of_nodes)]
                              for row in range(num_of_nodes)]
-        self.visited = [False] * num_of_nodes
-        self.dfs_sequence = []
         self.ham_cost = 0
-
+        self.mst_cost = 0
 
     def add_edge(self, node1, node2, weight=1):
         self.m_adj_matrix[node1][node2] = weight
-        self.m_adj_matrix[node2][node1] = weight            
+        self.m_adj_matrix[node2][node1] = weight
 
     def print_adj_matrix(self):
         for i in self.m_adj_matrix:
             print(i)
-
-    def printMST(self, parent):
-        # print("Edge \tWeight")
+            
+    def costMST(self, parent):
         for i in range(1, self.m_num_of_nodes):
-            # print(parent[i], "-", i, "\t", self.m_adj_matrix[i][parent[i]])
+            print(parent[i], "-", i, "\t", self.m_adj_matrix[i][parent[i]])
             self.mst_adj[parent[i]][i] = self.m_adj_matrix[i][parent[i]]
             self.mst_adj[i][parent[i]] = self.m_adj_matrix[i][parent[i]]
-
+            self.mst_cost = self.mst_cost + self.m_adj_matrix[i][parent[i]]
 
     def minKey(self, key, mstSet):
         min = sys.maxsize
@@ -38,70 +42,76 @@ class Graph:
             if key[v] < min and mstSet[v] == False:
                 min = key[v]
                 min_index = v
- 
+
         return min_index
- 
+
     def primMST(self):
         key = [sys.maxsize] * self.m_num_of_nodes
         parent = [None] * self.m_num_of_nodes
         key[0] = 0
         mstSet = [False] * self.m_num_of_nodes
- 
+
         parent[0] = -1
- 
+
         for cout in range(self.m_num_of_nodes):
             u = self.minKey(key, mstSet)
             mstSet[u] = True
             for v in range(self.m_num_of_nodes):
                 if self.m_adj_matrix[u][v] > 0 and mstSet[v] == False and key[v] > self.m_adj_matrix[u][v]:
                     key[v] = self.m_adj_matrix[u][v]
-                    parent[v] = u 
-        self.printMST(parent)
+                    parent[v] = u
+        self.costMST(parent)
 
     def DFS(self, start):
         self.dfs_sequence.append(start)
-        print(start, end = ' ')
         self.visited[start] = True
-        for i in range(self.m_num_of_nodes):
-            if (self.mst_adj[start][i] !=0 and (not self.visited[i])):
+
+        vertices = list(range(self.m_num_of_nodes))
+        random.shuffle(vertices)
+
+        for i in vertices:
+            if (self.mst_adj[start][i] != 0 and (not self.visited[i])):
                 self.DFS(i)
-        
-    
+
     def Cost_Calculation(self):
         for i in range(self.m_num_of_nodes - 1):
-            self.ham_cost += self.m_adj_matrix[self.dfs_sequence[i]][self.dfs_sequence[i+1]]
-        self.ham_cost += self.m_adj_matrix[self.dfs_sequence[-1]][self.dfs_sequence[0]]
+            self.ham_cost += self.m_adj_matrix[self.dfs_sequence[i]
+                                               ][self.dfs_sequence[i+1]]
+        self.ham_cost += self.m_adj_matrix[self.dfs_sequence[-1]
+                                           ][self.dfs_sequence[0]]
 
-v = []
-t = []
 
-for n in range(1, 400):
+
+for n in range(3, 200):
+    x1.append(n)
+    x2.append(n)
+    a = random.randint(n, 3 * n)
     graph = Graph(n)
-
     for i in range(n):
         for j in range(n):
             if (i != j):
-                # graph.m_adj_matrix[i][j] = graph.m_adj_matrix[j][i] = math.ceil(math.sqrt((((i - j)*(math.gcd(i,j) + math.lcm(i, j)))**2)*2) * 100)
-                graph.m_adj_matrix[i][j]  = graph.m_adj_matrix[j][i] = math.ceil(math.sqrt(2*(((math.sqrt(i))-(math.sqrt(j)))**2)))
-    start = timer()
+                if random.random() > 0.025:
+                    graph.m_adj_matrix[i][j] = graph.m_adj_matrix[j][i] = random.randint(a,2*a-1)
+                else :
+                    graph.m_adj_matrix[i][j] = graph.m_adj_matrix[j][i] = math.ceil(math.sqrt(2*(((math.sqrt(i+1))-(math.sqrt(j+1)))**2))*500)
+
+
+    graph.print_adj_matrix()
     graph.primMST()
     graph.DFS(random.randint(0, n-1))
+    print()
     print(graph.dfs_sequence)
     graph.Cost_Calculation()
-    print(graph.ham_cost)
-    end = timer()
-    v.append(n)
-    t.append(end-start)
-    print(f"{n} -> {end-start}")
+    y1.append(graph.ham_cost)
+    print(graph.mst_cost)
+    y2.append(2*graph.mst_cost)
 
-plt.plot(v,t, label = "Time Taken Generating Minimum Hamiltonian Circuit")
-# x_cords = range(1,400)
-# y_cords = [x*x*math.log2(x)/20000000 for x in x_cords]
-# plt.plot(x_cords, y_cords, label = "nlogn")
+print(y1)
+print(y2)
+plt.plot(x1,y1,label="Minimum Hamiltonian Cost")
+plt.plot(x2,y2,label="2 x Cost of Minimum Spanning Tree")
 plt.xlabel("Number of Vertices")
-plt.ylabel("Time Taken (in seconds)")
-plt.title("Time Taken for generating minimum Hamiltonian Circuit")
+plt.ylabel("Total Cost")
+plt.title("Cost Comparision")
 plt.legend()
 plt.show()
-
-

@@ -78,7 +78,7 @@ class Graph:
 
 
 
-for n in range(3, 500):
+for n in range(3, 100):
     x1.append(n)
     x2.append(n)
     a = random.randint(5,8)
@@ -87,7 +87,7 @@ for n in range(3, 500):
         for j in range(n):
             if (i != j):
                 graph.m_adj_matrix[i][j] = graph.m_adj_matrix[j][i] = random.randint(a,2*a-1)
-    #graph.print_adj_matrix()
+    graph.print_adj_matrix()
     graph.primMST()
     graph.DFS(random.randint(0, n-1))
     #print(graph.dfs_sequence)

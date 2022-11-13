@@ -98,10 +98,14 @@ offset = random.randint(1, n*n)
 #         graph.m_adj_matrix[j][i] = graph.m_adj_matrix[i][j]
 
 
+a = 50
 for i in range(n):
-    for j in range(n):
-        if (i != j):
-            graph.m_adj_matrix[i][j] = math.ceil(math.sqrt((((i - j)*(math.gcd(i,j) + math.lcm(i, j)))**2)*2) * 100)
+        for j in range(n):
+            if (i != j):
+                if random.random() > 1/(n):
+                    graph.m_adj_matrix[i][j] = graph.m_adj_matrix[j][i] = random.randint(a,2*a-1)
+                else :
+                    graph.m_adj_matrix[i][j] = graph.m_adj_matrix[j][i] = math.ceil(math.sqrt(2*(((math.sqrt(i+1))-(math.sqrt(j+1)))**2))*50)
 
 graph.print_adj_matrix()
 

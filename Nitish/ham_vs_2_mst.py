@@ -14,6 +14,7 @@ class Graph:
         self.visited = [False] * num_of_nodes
         self.dfs_sequence = []
         self.ham_cost = 0
+        self.mst_cost = 0
 
 
     def add_edge(self, node1, node2, weight=1):
@@ -30,6 +31,7 @@ class Graph:
             # print(parent[i], "-", i, "\t", self.m_adj_matrix[i][parent[i]])
             self.mst_adj[parent[i]][i] = self.m_adj_matrix[i][parent[i]]
             self.mst_adj[i][parent[i]] = self.m_adj_matrix[i][parent[i]]
+            self.mst_cost += self.m_adj_matrix[i][parent[i]]
 
 
     def minKey(self, key, mstSet):
@@ -60,7 +62,7 @@ class Graph:
 
     def DFS(self, start):
         self.dfs_sequence.append(start)
-        print(start, end = ' ')
+        # print(start, end = ' ')
         self.visited[start] = True
         for i in range(self.m_num_of_nodes):
             if (self.mst_adj[start][i] !=0 and (not self.visited[i])):
@@ -73,7 +75,8 @@ class Graph:
         self.ham_cost += self.m_adj_matrix[self.dfs_sequence[-1]][self.dfs_sequence[0]]
 
 v = []
-t = []
+ham_cost = []
+mst_cost = []
 
 for n in range(1, 400):
     graph = Graph(n)
@@ -81,27 +84,23 @@ for n in range(1, 400):
     for i in range(n):
         for j in range(n):
             if (i != j):
-                # graph.m_adj_matrix[i][j] = graph.m_adj_matrix[j][i] = math.ceil(math.sqrt((((i - j)*(math.gcd(i,j) + math.lcm(i, j)))**2)*2) * 100)
+                # graph.m_adj_matrix[i][j] = graph.m_adj_matrix[j][i] = math.ceil(math.sqrt((((i - j)/(math.gcd(i,j) + math.lcm(i, j)) + i)**2)*2)*10)
                 graph.m_adj_matrix[i][j]  = graph.m_adj_matrix[j][i] = math.ceil(math.sqrt(2*(((math.sqrt(i))-(math.sqrt(j)))**2)))
-    start = timer()
+
     graph.primMST()
     graph.DFS(random.randint(0, n-1))
-    print(graph.dfs_sequence)
+    # print(graph.dfs_sequence)
     graph.Cost_Calculation()
-    print(graph.ham_cost)
-    end = timer()
+    print(graph.ham_cost, graph.mst_cost)
     v.append(n)
-    t.append(end-start)
-    print(f"{n} -> {end-start}")
+    ham_cost.append(graph.ham_cost)
+    mst_cost.append(2*graph.mst_cost)
 
-plt.plot(v,t, label = "Time Taken Generating Minimum Hamiltonian Circuit")
-# x_cords = range(1,400)
-# y_cords = [x*x*math.log2(x)/20000000 for x in x_cords]
-# plt.plot(x_cords, y_cords, label = "nlogn")
+plt.plot(v,ham_cost,label="Minimum Hamiltonian Cost")
+plt.plot(v,mst_cost,label="2 x Cost of Minimum Spanning Tree")
 plt.xlabel("Number of Vertices")
-plt.ylabel("Time Taken (in seconds)")
-plt.title("Time Taken for generating minimum Hamiltonian Circuit")
+plt.ylabel("Total Cost")
+plt.title("Cost Comparision")
 plt.legend()
 plt.show()
-
 
