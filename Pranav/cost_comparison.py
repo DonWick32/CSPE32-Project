@@ -81,11 +81,12 @@ class Graph:
 for n in range(3, 500):
     x1.append(n)
     x2.append(n)
+    a = random.randint(5,8)
     graph = Graph(n)
     for i in range(n):
         for j in range(n):
             if (i != j):
-                graph.m_adj_matrix[i][j] = graph.m_adj_matrix[j][i] = random.randint(10,19)
+                graph.m_adj_matrix[i][j] = graph.m_adj_matrix[j][i] = random.randint(a,2*a-1)
     #graph.print_adj_matrix()
     graph.primMST()
     graph.DFS(random.randint(0, n-1))
