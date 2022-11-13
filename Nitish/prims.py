@@ -84,13 +84,24 @@ graph = Graph(n)
 
 offset = random.randint(1, n*n)
 
+# for i in a:
+#     for j in b:
+#         if (j != i and graph.m_adj_matrix[i][j] == 0):
+#             for k in c:
+#                 if (graph.m_adj_matrix[i][k] != 0):
+#                     if (graph.m_adj_matrix[k][j] != 0):
+#                         graph.m_adj_matrix[i][j] = max(int(math.ceil(math.sqrt(graph.m_adj_matrix[i][k]**2 + graph.m_adj_matrix[k][j]**2))), graph.m_adj_matrix[i][j])
+#                     else:
+#                         graph.m_adj_matrix[i][j] = max(random.randint(0, n*n), graph.m_adj_matrix[i][j])
+#                 else:
+#                     graph.m_adj_matrix[i][j] = max(random.randint(0, n*n), graph.m_adj_matrix[i][j])
+#         graph.m_adj_matrix[j][i] = graph.m_adj_matrix[i][j]
+
+
 for i in range(n):
     for j in range(n):
-        if (graph.m_adj_matrix[j][i] != 0):
-            graph.m_adj_matrix[i][j] = graph.m_adj_matrix[j][i]
-        elif (i != j):
-            # graph.add_edge(i, j, abs(i-j) + offset)
-            graph.add_edge(i, j, random.randint(1,n))
+        if (i != j):
+            graph.m_adj_matrix[i][j] = math.ceil(math.sqrt((((i - j)*(math.gcd(i,j) + math.lcm(i, j)))**2)*2) * 100)
 
 graph.print_adj_matrix()
 
