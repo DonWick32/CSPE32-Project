@@ -17,12 +17,12 @@
  ![](images/ham_bruteforce1.png)\
  ![](images/ham_bruteforce2.png)
  
- #Bruteforce Vertices vs Time\
+ #Bruteforce Vertices vs Time\-
  -The bruteforce algorithm is not advised for finding minimum hamiltonian graph due to the time complexity being O(n!) since there are (n-1)!/2 possible hamiltonian cycles for a complete graph.
  ![](images/bruteforce_VvsT.png)
  
- #Minimum Hamiltonian cycle in graph that satisfies triangle inequalities\
- -
+ #Minimum Hamiltonian cycle in graph that satisfies triangle inequalities
+ 
  
 #Credits\
  -Bharat Jude Johnson-106121027,\
