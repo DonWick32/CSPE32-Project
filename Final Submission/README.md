@@ -23,7 +23,7 @@
  
  #Minimum Hamiltonian cycle in graph that satisfies triangle inequalities\
  -It is an approximation algorithm. The algorithm calculates the minimum spanning tree. It then selects a vertex as the starting node arbitrarily and adds all the visited nodes in a list using depth first search (DFS). Then it lists the hamiltonian cycle in the order of the vertices present in the list.
- 
+ ![](images/triangular_inequality.png)
  
  
 #Credits\
