@@ -5,6 +5,10 @@
  
 #Project Description
 
+
+ #Minimum Spanning Tree
+ -Prim's Algorithm: A vertex is chosen as the starting node in a graph with n nodes. The cheapest edge at the vertex is added to the tree. Next, the algorithm looks for the next cheapest edge connected to the vertices in the tree and checks if a cycle is formed in the tree. If a cycle is formed, it does not add the edge to the tree and goes for the next cheapest edge. Else, it adds the edge and new vertex to the tree and looks for the next cheapest edge. This process ends when there n-1 edge in the tree.
+
  #Bruteforce algorithm to find Minimum Hamiltonian cycle in complete graph\
  -This algorithm finds every hamiltonian cycle and its weight and displays the Hamiltonian Cycle with the least weight.\
  ![](images/ham_bruteforce1.png)\
