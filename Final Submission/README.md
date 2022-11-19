@@ -12,7 +12,7 @@
  
  #Bruteforce Vertices vs Time\
  -The bruteforce algorithm is not advised for finding minimum hamiltonian graph due to the time complexity being O(n!).
- ![](images/bruteforce_VvsT.png)\
+ ![](images/bruteforce_VvsT.png)
  
 #Credits\
  -Bharat Jude Johnson-106121027,\
