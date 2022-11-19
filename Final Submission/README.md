@@ -8,7 +8,7 @@
  #Bruteforce algorithm to find Minimum Hamiltonian cycle in complete graph\
   This algorithm finds every hamiltonian cycle and its weight and displays the Hamiltonian Cycle with the least weight.\
   ![](images/ham_bruteforce1.png)\
-  ![](images/ham_bruteforce2.png)\
+  ![](images/ham_bruteforce2.png)
  
 #Credits
  Bharat Jude Johnson-106121027,\
