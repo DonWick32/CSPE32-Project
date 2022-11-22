@@ -1,5 +1,8 @@
 import random
 import sys
+from timeit import default_timer as timer
+import time_vs_vertices_graph
+
 
 class Graph:
     def __init__(self, num_of_nodes):
@@ -66,7 +69,7 @@ class Graph:
         if(self.hasCycle == False):
             print("No Hamilton cycle possible!")
             return
-        print("Minium Hamiltonian cycle : ", end = "")
+        print("Hamiltonian cycle : ", end = "")
         for vertex in self.currcycle:
             print(vertex, end=" ")
         print(self.currcycle[0])
@@ -76,18 +79,21 @@ class Graph:
         for i in self.m_adj_matrix:
             print(i)
 
+print("Number of Vertices vs Time (seconds):\n")
+for n in range(1, 11):
+    graph = Graph(n)
 
-n = int(input("Number of vertices: "))
-graph = Graph(n)
+    for i in range(n):
+        for j in range(n):
+            if (graph.m_adj_matrix[j][i] != 0):
+                graph.m_adj_matrix[i][j] = graph.m_adj_matrix[j][i]
+            elif (i != j):
+                graph.add_edge(i, j, random.randint(1,n*n))
 
-for i in range(n):
-    for j in range(n):
-        if (graph.m_adj_matrix[j][i] != 0):
-            graph.m_adj_matrix[i][j] = graph.m_adj_matrix[j][i]
-        elif (i != j):
-            graph.add_edge(i, j, random.randint(1,n*n))
+    start = timer()
+    graph.hamCycle()
+    end = timer()
+    print(f"{n} -> {end-start}")
 
-graph.print_adj_matrix()
-print("\n")
-graph.hamCycle()
-graph.printSolution()
+print()
+time_vs_vertices_graph.plot()

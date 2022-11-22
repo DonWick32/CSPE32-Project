@@ -6,6 +6,6 @@ def plot():
     plt.plot(v,t)
     plt.xlabel("Number of Vertices")
     plt.ylabel("Time Taken (in seconds)")
-    plt.title("Time Taken for generating Minimum Hamiltonian Circuit by Brute force approach")
+    plt.title("Time Taken for generating Minimum Hamiltonian Cycle by Brute force approach")
     plt.show()
 

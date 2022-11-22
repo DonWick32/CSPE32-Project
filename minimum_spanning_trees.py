@@ -98,7 +98,7 @@ class Graph:
             self.m_kruskal_mst[u][v] = self.m_kruskal_mst[v][u] = weight
 
 
-n = int(input("Number of vertices: "))
+n = int(input("Enter number of vertices: "))
 graph = Graph(n)
 
 for i in range(n):
@@ -109,6 +109,7 @@ for i in range(n):
             graph.add_edge(i, j, random.randint(1,n*n))
 
 print()
+print("The Adjacency Matrix of a randomly generated weighted complete graph:\n")
 graph.print_adj_matrix()
 print()
 
